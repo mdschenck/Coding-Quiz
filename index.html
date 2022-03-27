@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Secure Password Generator</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+
+
+    <div class="wrapper">
+      <header>
+        <h1>Coding Quiz Challenge</h1>
+        <h2> Timer:</h2> <h2 id="timerEl">60</h2>
+        <h2>View High Scores</h2>
+      </header>
+
+
+      <div class="card" id="welcomeCard">
+        <div class="card-header">
+          <h2>Coding Quiz Challenge
+            
+          </h2>
+        </div>
+        <div class="card-body">
+          <textarea>
+            </p> Try to answer as many questions correctly as you can! </p>
+          </textarea>
+
+        <div class="card-footer">
+          <button id="startButton" class="btn">Start</button>
+        </div>
+      </div>
+
+
+        <div class="card" id="questions">
+          <div class="card-header">
+            <h2>
+                <!-- Question Name Dynamically Inserted Here  -->
+            </h2>
+          </div>
+          <div class="card-body">
+            <textarea>
+                <!-- Question Possible Answers Dynamically Inserted Here  -->
+
+
+            </textarea>
+  
+          <div class="card-footer" id="answerWrongOrRight">
+                <!-- Wrong or Right Message Displayed Here Dynamically  -->
+
+          </div>
+        </div>
+    
+
+
+        <div class="card" id="finalScore">
+          <div class="card-header">
+            <h2>All Done!
+              
+            </h2>
+          </div>
+          <div class="card-body">
+            <textarea></textarea>
+             <p>
+                 <!-- Score Dynamically Inserted Here  -->
+             </p>
+            </textarea>
+  
+          <div class="card-footer">
+              <!-- <form> </form>  NEED FORM HERE FOR NAME ***** --> 
+            <button id="submitName" class="btn">Submit</button>
+          </div>
+        </div>
+
+
+        <div class="card" id="showHighScores">
+          <div class="card-header">
+            <h2>High Scores
+              
+            </h2>
+          </div>
+          <div class="card-body">
+            <textarea>
+
+
+            </textarea>
+  
+          <div class="card-footer">
+            <button id="goBack" class="btn">Go Back</button>
+            <button id="clearHighScores" class="btn">Clear High Scores</button>
+          </div>
+        </div>
+
+
+      </div>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>
