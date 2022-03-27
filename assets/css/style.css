@@ -1,3 +1,41 @@
 .hide {
   display: none;
 }
+
+.show {
+  display: block;
+}
+
+header {
+  text-align: center;
+}
+
+header h2 {
+  display: inline;
+}
+
+.card {
+  margin-left: 35%;
+  width: 450px;
+  background-color: aquamarine;
+  align-items: center;
+  border-color: brown;
+  border-style: solid;
+  border-radius: 15px;
+}
+
+.card p {
+  width: 92%;
+  text-align: center;
+}
+
+.card h2 {
+  text-align: center;
+}
+.card button {
+  margin-left: 45%;
+}
+
+ul {
+  list-style-type: none;
+}

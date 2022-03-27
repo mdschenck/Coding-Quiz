@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Secure Password Generator</title>
+    <title>Coding Quiz Challenge</title>
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
@@ -13,21 +13,22 @@
     <div class="wrapper">
         <header>
             <h1>Coding Quiz Challenge</h1>
-                <h2> Timer:</h2> <h2 id="timerElement">60</h2>
-            <h2>View High Scores</h2>
+            <h2>View High Scores  ||  </h2>
+                <h2> Timer: </h2> <h2 id="timerElement">60</h2>
+
         </header>
 
 
         <div class="card" id="welcomeCard">
             <div class="card-header">
-                <h2>Coding Quiz Challenge
+                <h2>Ready? 
             
                 </h2>
             </div>
             <div class="card-body">
-                <textarea>
+                <p> 
              Try to answer as many questions correctly as you can!
-                </textarea>
+                </p> 
 
             <div class="card-footer">
                 <button id="startButton" class="btn">Start</button>
@@ -41,12 +42,8 @@
                 <!-- Question Name Dynamically Inserted Here  -->
             </h2>
           </div>
-          <div class="card-body">
-            <textarea>
-                <!-- Question Possible Answers Dynamically Inserted Here  -->
+          <div class="card-body" id="answers">
 
-
-            </textarea>
   
           <div class="card-footer" id="answerWrongOrRight">
                 <!-- Wrong or Right Message Displayed Here Dynamically  -->
@@ -96,6 +93,6 @@
 
 
       </div>
-    <script src="assets/js/script.js"></script>
+    <script async src="assets/js/script.js"></script>
   </body>
 </html>
