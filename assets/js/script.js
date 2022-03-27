@@ -1,6 +1,12 @@
+var timerElement = document.querySelector("#timerElement");
+var startButton = document.querySelector("#start-button");
+var goBackButton = document.querySelector("#goBack");
+var clearHighScores = document.querySelector("#clearHighScores");
+
+var score = 0;
 let secondsLeft = 60;
-var timerElement = document.querySelector();
-var startButton = document.querySelector(".start-button");
+
+function init() {}
 
 function getScore() {
   var storedScore = localStorage.getItem("userScore");
@@ -12,11 +18,6 @@ function getScore() {
   }
 }
 
-function init() {
-  getWins();
-  getLosses();
-}
-
 function startGame() {
   isWin = false;
   timerCount = 10;
@@ -26,7 +27,7 @@ function startGame() {
 
 //NEED EVENT LISTENER for
 
-startButton.addEventListenter("click", setTimer());
+// startButton.addEventListenter("click", startGame);
 // TIMER SECTION
 
 function setTimer() {
@@ -34,12 +35,6 @@ function setTimer() {
     secondsLeft--;
     timerElement.textContent = secondsLeft;
 
-    if (secondsLeft >= 0) {
-      if (isWin && secondsLeft > 0) {
-        clearInterval(timerInterval);
-        winGame();
-      }
-    }
     if (secondsLeft === 0) {
       clearInterval(timerInterval);
     }
@@ -47,3 +42,5 @@ function setTimer() {
     console.log(secondsLeft + " Seconds Left!");
   }, 1000);
 }
+
+setTimer();
