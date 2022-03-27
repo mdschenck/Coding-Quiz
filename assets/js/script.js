@@ -10,11 +10,67 @@ var answerWrongOrRight = document.querySelector("#answerWrongOrRight");
 var score = 0;
 let secondsLeft = 60;
 
-function init() {}
+var question = document.getElementById("#question");
+var answer1 = document.getElementById(".btn1");
+var answer2 = document.getElementById(".btn2");
+var answer3 = document.getElementById(".btn3");
+var answer4 = document.getElementById(".btn4");
+
+var question1 = {
+  question: "What Color Is The Sky?",
+  answer1: "Blue",
+  answer2: "Red",
+  answer3: "Green",
+  answer4: "Yellow",
+  correctAnswer: "",
+};
+
+var question2 = {
+  question: "What Color Is The Sky?",
+  answer1: "Blue",
+  answer2: "Red",
+  answer3: "Green",
+  answer4: "Yellow",
+  correctAnswer: "",
+};
+
+var question3 = {
+  question: "What Color Is The Sky?",
+  answer1: "Blue",
+  answer2: "Red",
+  answer3: "Green",
+  answer4: "Yellow",
+  correctAnswer: "",
+};
+
+var question4 = {
+  question: "What Color Is The Sky?",
+  answer1: "Blue",
+  answer2: "Red",
+  answer3: "Green",
+  answer4: "Yellow",
+  correctAnswer: "",
+};
+
+var question5 = {
+  question: "What Color Is The Sky?",
+  answer1: "Blue",
+  answer2: "Red",
+  answer3: "Green",
+  answer4: "Yellow",
+  correctAnswer: "",
+};
+
+localStorage.setItem("questionOne", JSON.stringify(question1));
+localStorage.setItem("questionTwo", JSON.stringify(question2));
+localStorage.setItem("questionThree", JSON.stringify(question3));
+localStorage.setItem("questionFour", JSON.stringify(question4));
+localStorage.setItem("questionFive", JSON.stringify(question5));
+
+console.log(question1);
 
 function getScore() {
   var storedScore = localStorage.getItem("userScore");
-
   if (storedScore === null) {
     score = 0;
   } else {
@@ -22,14 +78,20 @@ function getScore() {
   }
 }
 
+function init() {
+  getScore();
+}
+
+// localStorage.setItem("StoredScore", storedScore);
+
 function clearInterval() {
   timerInterval = 0;
 }
 
 function startGame() {
-  //   startButton.disabled = true; //disables start button
+  // startButton.disabled = true; //disables start button
   setTimer();
-  renderQuestionOne();
+  renderQuestions();
 }
 
 function stopGame() {}
@@ -48,16 +110,18 @@ function incorrectAnswer() {
 
 //    ** QUESTION ONE **
 
-function renderQuestionOne() {
+// Need For Loop i < 5 ------ REFERENCE ARRAY Objects in local storage.
+
+function renderQuestions() {
   questionCard.setAttribute("class", "show");
 
   questionCard.children[0].children[0].textContent =
     "What do horseys like to eat for din din";
   questionCard.children[1].children[0].innerHTML = `<ul>
-<li><button id="1" class="btn1">green sludge</button></li>
-<li><button id="2" class="btn2">carbourators</button></li>
-<li><button id="3" class="btn3">old shoes</button></li>
-<li><button id="4" class="btn4">Apples!</button></li>
+<li><button id="1" id="btn1">green sludge</button></li>
+<li><button id="2" id="btn2">carbourators</button></li>
+<li><button id="3" id="btn3">old shoes</button></li>
+<li><button id="4" id="btn4">Apples!</button></li>
 </ul>
 `;
 
@@ -65,76 +129,6 @@ function renderQuestionOne() {
   var btn2 = document.querySelector(".btn2");
   var btn3 = document.querySelector(".btn3");
   var btn4 = document.querySelector(".btn4");
-
-  btn4.addEventListener("click", function () {
-    event.preventDefault();
-    correctAnswer();
-    renderQuestionTwo();
-  });
-
-  btn3.addEventListener("click", function () {
-    event.preventDefault();
-    incorrectAnswer();
-    renderQuestionTwo();
-  });
-
-  btn2.addEventListener("click", function () {
-    event.preventDefault();
-    incorrectAnswer();
-    renderQuestionTwo();
-  });
-
-  btn1.addEventListener("click", function () {
-    event.preventDefault();
-    incorrectAnswer();
-    renderQuestionTwo();
-  });
-
-  console.log(event);
-}
-
-// ** QUESTION TWO **
-
-function renderQuestionTwo() {
-  questionCard.children[0].children[0].textContent =
-    "What color is a bunny rabbert";
-  questionCard.children[1].children[0].innerHTML = `<ul>
-<li><button id="1" class="btn">purple</button></li>
-<li><button id="2" class="btn">The Sky</button></li>
-<li><button id="3" class="btn">bananas</button></li>
-<li><button id="4" class="btn">Such a cute light brown with grey spots and a pink nose.</button></li>
-</ul>
-`;
-  var btn1 = document.querySelector(".btn1");
-  var btn2 = document.querySelector(".btn2");
-  var btn3 = document.querySelector(".btn3");
-  var btn4 = document.querySelector(".btn4");
-
-  btn4.addEventListener("click", function () {
-    event.preventDefault();
-    correctAnswer();
-    renderQuestionThree();
-  });
-
-  btn3.addEventListener("click", function () {
-    event.preventDefault();
-    incorrectAnswer();
-    renderQuestionThree();
-  });
-
-  btn2.addEventListener("click", function () {
-    event.preventDefault();
-    incorrectAnswer();
-    renderQuestionThree();
-  });
-
-  btn1.addEventListener("click", function () {
-    event.preventDefault();
-    incorrectAnswer();
-    renderQuestionThree();
-  });
-
-  console.log(event);
 }
 
 // TIMER SECTION
