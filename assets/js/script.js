@@ -22,16 +22,16 @@ var question1 = {
   answer2: "Red",
   answer3: "Green",
   answer4: "Yellow",
-  correctAnswer: "",
+  correctAnswer: "1",
 };
 
 var question2 = {
-  question: "What Color Is The Sky?",
+  question: "What Color Is A Banana?",
   answer1: "Blue",
   answer2: "Red",
   answer3: "Green",
   answer4: "Yellow",
-  correctAnswer: "",
+  correctAnswer: "4",
 };
 
 var question3 = {
@@ -67,7 +67,17 @@ localStorage.setItem("questionThree", JSON.stringify(question3));
 localStorage.setItem("questionFour", JSON.stringify(question4));
 localStorage.setItem("questionFive", JSON.stringify(question5));
 
+var questions = [
+  "questionOne",
+  "questionTwo",
+  "questionThree",
+  "questionFour",
+  "questionFive",
+];
+
 console.log(question1);
+
+console.log(questions[1]);
 
 function getScore() {
   var storedScore = localStorage.getItem("userScore");
@@ -91,6 +101,7 @@ function clearInterval() {
 function startGame() {
   // startButton.disabled = true; //disables start button
   setTimer();
+  showQuestions();
   renderQuestions();
 }
 
@@ -98,13 +109,12 @@ function stopGame() {}
 
 function correctAnswer() {
   // storedScore = storedScore + 20;
-  answerWrongOrRight.children[0].innerHTML = "<p>You Got It! Correct!</p>";
+  answerWrongOrRight.children[2].children[3] = "<p>You Got It! Correct!</p>";
   console.log("correct answer!");
 }
 
 function incorrectAnswer() {
-  answerWrongOrRight.children[0].innerHTML =
-    "<p>Ooh, bummer. That's Incorrect.</p>";
+  questionCard.children[2].innerHTML = "<p>Ooh, bummer. That's Incorrect.</p>";
   console.log("incorrect");
 }
 
@@ -112,23 +122,56 @@ function incorrectAnswer() {
 
 // Need For Loop i < 5 ------ REFERENCE ARRAY Objects in local storage.
 
+// function getQuestion() {
+
+// if (lastGrade !== null) {
+//   document.querySelector(".message").textContent =
+//     lastGrade.student + " received a/an " + lastGrade.grade;
+// }
+
+function showQuestions() {
+  questionCard.setAttribute("class", "card show");
+  welcomeCard.setAttribute("class", "hide");
+}
+
 function renderQuestions() {
-  questionCard.setAttribute("class", "show");
+  var askQuestion = JSON.parse(localStorage.getItem(questions[0]));
 
-  questionCard.children[0].children[0].textContent =
-    "What do horseys like to eat for din din";
-  questionCard.children[1].children[0].innerHTML = `<ul>
-<li><button id="1" id="btn1">green sludge</button></li>
-<li><button id="2" id="btn2">carbourators</button></li>
-<li><button id="3" id="btn3">old shoes</button></li>
-<li><button id="4" id="btn4">Apples!</button></li>
-</ul>
-`;
+  function correctAnswer() {
+    // storedScore = storedScore + 20;
+    answerWrongOrRight.innerHTML = "<p>You Got It! Correct!</p>";
+    console.log("correct answer!");
+  }
 
-  var btn1 = document.querySelector(".btn1");
-  var btn2 = document.querySelector(".btn2");
-  var btn3 = document.querySelector(".btn3");
-  var btn4 = document.querySelector(".btn4");
+  function incorrectAnswer() {
+    answerWrongOrRight.innerHTML = "<p>Ooh, bummer. That's Incorrect.</p>";
+    console.log("incorrect");
+  }
+
+  questionCard.children[0].children[0].textContent = askQuestion.question;
+
+  questionCard.children[1].innerHTML = `<ul>
+  <li><button id="1">${askQuestion.answer1}</button></li>
+  <li><button id="2">${askQuestion.answer2}</button></li>
+  <li><button id="3">${askQuestion.answer3}</button></li>
+  <li><button id="4">${askQuestion.answer4}</button></li>
+  </ul>
+  `;
+
+  questionCard = addEventListener("click", function (event) {
+    event.preventDefault();
+    console.log(event.target);
+
+    if (event.target == askQuestion.correctAnswer) {
+      correctAnswer();
+      console.log("yay");
+    }
+
+    if (event.target != askQuestion.correctAnswer) {
+      incorrectAnswer();
+      console.log("boo");
+    }
+  });
 }
 
 // TIMER SECTION
