@@ -6,9 +6,11 @@ var welcomeCard = document.querySelector("#welcomeCard");
 var questionCard = document.querySelector("#questions");
 var answers = document.querySelector("#answers");
 var answerWrongOrRight = document.querySelector("#answerWrongOrRight");
+var start = document.querySelector("#start");
 
+var storedScore = localStorage.getItem("userScore");
 var score = 0;
-let secondsLeft = 60;
+let secondsLeft = 120;
 
 var question = document.getElementById("#question");
 var answer1 = document.getElementById(".btn1");
@@ -80,19 +82,12 @@ console.log(question1);
 console.log(questions[1]);
 
 function getScore() {
-  var storedScore = localStorage.getItem("userScore");
   if (storedScore === null) {
-    score = 0;
+    storedScore = 0;
   } else {
     score = storedScore;
   }
 }
-
-function init() {
-  getScore();
-}
-
-// localStorage.setItem("StoredScore", storedScore);
 
 function clearInterval() {
   timerInterval = 0;
@@ -107,31 +102,12 @@ function startGame() {
 
 function stopGame() {}
 
-function correctAnswer() {
-  // storedScore = storedScore + 20;
-  answerWrongOrRight.children[2].children[3] = "<p>You Got It! Correct!</p>";
-  console.log("correct answer!");
-}
-
-function incorrectAnswer() {
-  questionCard.children[2].innerHTML = "<p>Ooh, bummer. That's Incorrect.</p>";
-  console.log("incorrect");
-}
-
-//    ** QUESTION ONE **
-
-// Need For Loop i < 5 ------ REFERENCE ARRAY Objects in local storage.
-
-// function getQuestion() {
-
-// if (lastGrade !== null) {
-//   document.querySelector(".message").textContent =
-//     lastGrade.student + " received a/an " + lastGrade.grade;
-// }
+//    ** QUESTION DISPLAY **
 
 function showQuestions() {
   questionCard.setAttribute("class", "card show");
   welcomeCard.setAttribute("class", "hide");
+  start.setAttribute("class", "hide");
 }
 
 function renderQuestions() {
@@ -141,37 +117,109 @@ function renderQuestions() {
     // storedScore = storedScore + 20;
     answerWrongOrRight.innerHTML = "<p>You Got It! Correct!</p>";
     console.log("correct answer!");
+    localStorage.setItem("userScore", parseInt(score) + 5);
+    getScore();
+    // i++;
+    function delay(time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    }
+
+    delay(1000).then(() => console.log("ran after 1 second1 passed"));
+    renderQuestion2();
   }
 
   function incorrectAnswer() {
     answerWrongOrRight.innerHTML = "<p>Ooh, bummer. That's Incorrect.</p>";
     console.log("incorrect");
+    // i++;
+    function delay(time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    }
+    delay(1000).then(() => console.log("ran after 1 second1 passed"));
+    renderQuestion2();
   }
 
-  questionCard.children[0].children[0].textContent = askQuestion.question;
+  questionCard.children[0].children[0].innerHTML = askQuestion.question;
 
   questionCard.children[1].innerHTML = `<ul>
-  <li><button id="1">${askQuestion.answer1}</button></li>
-  <li><button id="2">${askQuestion.answer2}</button></li>
-  <li><button id="3">${askQuestion.answer3}</button></li>
-  <li><button id="4">${askQuestion.answer4}</button></li>
+  <li><button id="1" >${askQuestion.answer1}</button></li>
+  <li><button id="2" >${askQuestion.answer2}</button></li>
+  <li><button id="3" >${askQuestion.answer3}</button></li>
+  <li><button id="4" >${askQuestion.answer4}</button></li>
   </ul>
   `;
 
   questionCard = addEventListener("click", function (event) {
     event.preventDefault();
-    console.log(event.target);
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    console.log(event.srcElement.id);
 
-    if (event.target == askQuestion.correctAnswer) {
+    if (event.srcElement.id == askQuestion.correctAnswer) {
       correctAnswer();
-      console.log("yay");
     }
 
-    if (event.target != askQuestion.correctAnswer) {
+    if (event.srcElement.id != askQuestion.correctAnswer) {
       incorrectAnswer();
-      console.log("boo");
     }
   });
+}
+
+function renderQuestion2() {
+  var askQuestion = JSON.parse(localStorage.getItem(questions[1]));
+
+  function correctAnswer() {
+    answerWrongOrRight.innerHTML = "<p>You Got It! Correct!</p>";
+    console.log("correct answer!");
+    localStorage.setItem("userScore", parseInt(score) + 5);
+    getScore();
+    // i++;
+    function delay(time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    }
+    delay(1000).then(() => console.log("ran after 1 second1 passed"));
+    displayResults();
+  }
+
+  function incorrectAnswer() {
+    answerWrongOrRight.innerHTML = "<p>Ooh, bummer. That's Incorrect.</p>";
+    console.log("incorrect");
+    // i++;
+    function delay(time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    }
+    delay(1000).then(() => console.log("ran after 1 second1 passed"));
+    displayResults();
+  }
+
+  questionCard.children[1].children[0].textContent = askQuestion.question;
+
+  // questionCard.children[1].innerHTML = `<ul>
+  // <li><button id="1" >${askQuestion.answer1}</button></li>
+  // <li><button id="2" >${askQuestion.answer2}</button></li>
+  // <li><button id="3" >${askQuestion.answer3}</button></li>
+  // <li><button id="4" >${askQuestion.answer4}</button></li>
+  // </ul>
+  // `;
+
+  questionCard = addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log(event.srcElement.id);
+
+    if (event.srcElement.id == askQuestion.correctAnswer) {
+      correctAnswer();
+    }
+
+    if (event.srcElement.id != askQuestion.correctAnswer) {
+      incorrectAnswer();
+    }
+  });
+}
+
+function displayResults() {
+  console.log("Your Score Is:" + score);
+  console.log(i);
 }
 
 // TIMER SECTION
@@ -182,18 +230,22 @@ function setTimer() {
       secondsLeft--;
       timerElement.textContent = secondsLeft;
     }, 1000);
-
-    if (secondsLeft == 0) {
-      clearInterval(timerInterval);
-      stopGame();
-      return;
-    }
+  } else if (secondsLeft == 0) {
+    clearInterval(timerInterval);
+    stopGame();
     return;
-    console.log(secondsLeft + " Seconds Left!");
   }
+  return;
+  console.log(secondsLeft + " Seconds Left!");
 }
 
-startButton = addEventListener("click", function () {
-  event.preventDefault();
-  startGame();
-});
+function init() {
+  startButton = addEventListener("click", function (event) {
+    localStorage.setItem("userScore", 0);
+    event.preventDefault();
+    event.stopPropagation();
+    startGame();
+  });
+}
+
+init();
