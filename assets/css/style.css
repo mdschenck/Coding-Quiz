@@ -1,3 +1,7 @@
+body {
+  background-color: yellowgreen;
+}
+
 .hide {
   display: none;
 }
@@ -22,6 +26,8 @@ header h2 {
   border-color: brown;
   border-style: solid;
   border-radius: 15px;
+  min-height: 250px;
+  max-height: 250px;
 }
 
 .card p {

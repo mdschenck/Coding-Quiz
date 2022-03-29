@@ -7,6 +7,8 @@ var questionCard = document.querySelector("#questions");
 var answers = document.querySelector("#answers");
 var answerWrongOrRight = document.querySelector("#answerWrongOrRight");
 var start = document.querySelector("#start");
+var finalScore = document.querySelector("#finalScore");
+var showHighScores = document.querySelector("#showHighScores");
 
 var storedScore = localStorage.getItem("userScore");
 var score = 0;
@@ -125,7 +127,7 @@ function renderQuestions() {
     }
 
     delay(1000).then(() => console.log("ran after 1 second1 passed"));
-    renderQuestion2();
+    displayResults();
   }
 
   function incorrectAnswer() {
@@ -136,7 +138,7 @@ function renderQuestions() {
       return new Promise((resolve) => setTimeout(resolve, time));
     }
     delay(1000).then(() => console.log("ran after 1 second1 passed"));
-    renderQuestion2();
+    displayResults();
   }
 
   questionCard.children[0].children[0].innerHTML = askQuestion.question;
@@ -194,13 +196,13 @@ function renderQuestion2() {
 
   questionCard.children[1].children[0].textContent = askQuestion.question;
 
-  // questionCard.children[1].innerHTML = `<ul>
-  // <li><button id="1" >${askQuestion.answer1}</button></li>
-  // <li><button id="2" >${askQuestion.answer2}</button></li>
-  // <li><button id="3" >${askQuestion.answer3}</button></li>
-  // <li><button id="4" >${askQuestion.answer4}</button></li>
-  // </ul>
-  // `;
+  questionCard.children[1].innerHTML = `<ul>
+  <li><button id="1" >${askQuestion.answer1}</button></li>
+  <li><button id="2" >${askQuestion.answer2}</button></li>
+  <li><button id="3" >${askQuestion.answer3}</button></li>
+  <li><button id="4" >${askQuestion.answer4}</button></li>
+  </ul>
+  `;
 
   questionCard = addEventListener("click", function (event) {
     event.preventDefault();
@@ -218,8 +220,40 @@ function renderQuestion2() {
 }
 
 function displayResults() {
+  finalScore.setAttribute("class", "card show");
+
+  // questionCard.setAttribute("class", "hide");
+
   console.log("Your Score Is:" + score);
-  console.log(i);
+
+  finalScore.children[1].innerHTML = `<ul>
+  <li>${highScore.name} + " ..... " ${highScore.score}</li>
+  </ul>
+  `;
+
+  var highScore = {
+    name: `${finalScore.event.returnValue}`,
+    score: score,
+  };
+
+  localStorage.setItem("highScore", JSON.stringify(highScore));
+
+  finalScore = addEventListener("click", function (event) {
+    // EVENT LISTENER OR??
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    console.log(event.returnValue);
+    localStorage.setItem("highScore", JSON.stringify(highScore));
+    showHighScores();
+  });
+}
+
+function showHighScores() {
+  showHighScores.setAttribute("class", "card show");
+
+  // finalScore.setAttribute("class", "hide");
+  finalScore.children[1].innerHTML = `<h2> Your Score is ${score}.</h2>`;
 }
 
 // TIMER SECTION

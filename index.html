@@ -8,94 +8,67 @@
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
-
-
     <div class="wrapper">
-        <header>
-            <h1>Coding Quiz Challenge</h1>
-            <h2>View High Scores  ||  </h2>
-                <h2> Timer: </h2> <h2 id="timerElement">60</h2>
+      <header>
+        <h1>Coding Quiz Challenge</h1>
+        <h2>View High Scores ||</h2>
+        <h2>Timer:</h2>
+        <h2 id="timerElement">60</h2>
+      </header>
 
-        </header>
-
-
-        <div class="card" id="welcomeCard">
-            <div class="card-header">
-                <h2>Ready? 
-            
-                </h2>
-            </div>
-            <div class="card-body">
-                <p> 
-             Try to answer as many questions correctly as you can!
-                </p> 
-            </div>
-            <div class="card-footer">
-                <!-- <button id="startButton" class="btn">Start</button> -->
-            </div>
+      <div class="card" id="welcomeCard">
+        <div class="card-header">
+          <h2>Ready?</h2>
         </div>
-
-
-        <div class="card hide" id="questions">
-          <div class="card-header">
-            <h2>
-                <!-- Question Name Dynamically Inserted Here  -->
-            </h2>
-          </div>
-          <div class="card-body" id="answers">
-
-            </div>
-          <div class="card-footer" id="answerWrongOrRight">
-                <!-- Wrong or Right Message Displayed Here Dynamically  -->
-
-          </div>
+        <div class="card-body">
+          <p>Try to answer as many questions correctly as you can!</p>
         </div>
-    
-
-
-        <div class="card hide" id="finalScore">
-          <div class="card-header">
-            <h2>All Done!
-              
-            </h2>
-          </div>
-          <div class="card-body">
-            <textarea></textarea>
-             <p>
-                 <!-- Score Dynamically Inserted Here  -->
-             </p>
-            </textarea>
-            </div>
-          <div class="card-footer">
-              <!-- <form> </form>  NEED FORM HERE FOR NAME ***** --> 
-            <button id="submitName" class="btn">Submit</button>
-          </div>
+        <div class="card-footer">
+          <!-- <button id="startButton" class="btn">Start</button> -->
         </div>
-
-
-        <div class="card hide" id="showHighScores">
-          <div class="card-header">
-            <h2>High Scores
-              
-            </h2>
-          </div>
-          <div class="card-body">
-            <textarea>
-
-
-            </textarea>
-          </div>
-          <div class="card-footer">
-            <button id="goBack" class="btn">Go Back</button>
-            <button id="clearHighScores" class="btn">Clear High Scores</button>
-          </div>
-        </div>
-
-        <div id="start">
-        <button id="startButton" class="show btn">Start</button>
-        </div>
-
       </div>
+
+      <div class="card hide" id="questions">
+        <div class="card-header">
+          <h2>
+            <!-- Question Name Dynamically Inserted Here  -->
+          </h2>
+        </div>
+        <div class="card-body" id="answers"></div>
+        <div class="card-footer" id="answerWrongOrRight">
+          <!-- Wrong or Right Message Displayed Here Dynamically  -->
+        </div>
+      </div>
+
+      <div class="card hide" id="finalScore">
+        <div class="card-header">
+          <h2>All Done!</h2>
+        </div>
+        <div class="card-body"></div>
+        <div class="card-footer">
+          <input type="text" placeholder="save high score" /><input
+            type="submit"
+          />
+        </div>
+      </div>
+
+      <div class="card hide" id="showHighScores">
+        <div class="card-header">
+          <h2>High Scores</h2>
+        </div>
+        <div class="card-body">
+          <!-- FOR EACH? - Append High Scores in UL from Local Storage -->
+        </div>
+        <div class="card-footer">
+          <button id="goBack" class="btn">Go Back</button>
+          <button id="clearHighScores" class="btn">Clear High Scores</button>
+        </div>
+      </div>
+
+      <div id="start">
+        <button id="startButton" class="show btn">Start</button>
+      </div>
+    </div>
     <script async src="assets/js/script.js"></script>
   </body>
 </html>
