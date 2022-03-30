@@ -113,7 +113,8 @@ function showQuestions() {
 }
 
 function renderQuestions() {
-  var askQuestion = JSON.parse(localStorage.getItem(questions[0]));
+  var questionNumber = 0;
+  var askQuestion = JSON.parse(localStorage.getItem(questions[questionNumber]));
 
   function correctAnswer() {
     // storedScore = storedScore + 20;
@@ -121,108 +122,60 @@ function renderQuestions() {
     console.log("correct answer!");
     localStorage.setItem("userScore", parseInt(score) + 5);
     getScore();
-    // i++;
     function delay(time) {
       return new Promise((resolve) => setTimeout(resolve, time));
     }
 
-    delay(1000).then(() => console.log("ran after 1 second1 passed"));
-    displayResults();
+    delay(1000).then(() => renderQuestions());
+    questionNumber++;
   }
 
   function incorrectAnswer() {
     answerWrongOrRight.innerHTML = "<p>Ooh, bummer. That's Incorrect.</p>";
     console.log("incorrect");
-    // i++;
     function delay(time) {
       return new Promise((resolve) => setTimeout(resolve, time));
     }
-    delay(1000).then(() => console.log("ran after 1 second1 passed"));
-    displayResults();
+    delay(1000).then(() => renderQuestions());
+    questionNumber++;
   }
 
-  questionCard.children[0].children[0].innerHTML = askQuestion.question;
+  if (questionNumber < 5) {
+    questionCard.children[0].children[0].innerHTML = askQuestion.question;
 
-  questionCard.children[1].innerHTML = `<ul>
-  <li><button id="1" >${askQuestion.answer1}</button></li>
-  <li><button id="2" >${askQuestion.answer2}</button></li>
-  <li><button id="3" >${askQuestion.answer3}</button></li>
-  <li><button id="4" >${askQuestion.answer4}</button></li>
+    questionCard.children[1].innerHTML = `<ul>
+  <li><button id="1" class="ansButton">${askQuestion.answer1}</button></li>
+  <li><button id="2" class="ansButton">${askQuestion.answer2}</button></li>
+  <li><button id="3" class="ansButton">${askQuestion.answer3}</button></li>
+  <li><button id="4" class="ansButton">${askQuestion.answer4}</button></li>
   </ul>
   `;
 
-  questionCard = addEventListener("click", function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-    console.log(event.srcElement.id);
+    questionCard = addEventListener("click", function (event) {
+      console.log(event.srcElement.id);
 
-    if (event.srcElement.id == askQuestion.correctAnswer) {
-      correctAnswer();
-    }
+      var element = event.target;
 
-    if (event.srcElement.id != askQuestion.correctAnswer) {
-      incorrectAnswer();
-    }
-  });
-}
+      if (event.srcElement.id == askQuestion.correctAnswer) {
+        correctAnswer();
+      }
 
-function renderQuestion2() {
-  var askQuestion = JSON.parse(localStorage.getItem(questions[1]));
-
-  function correctAnswer() {
-    answerWrongOrRight.innerHTML = "<p>You Got It! Correct!</p>";
-    console.log("correct answer!");
-    localStorage.setItem("userScore", parseInt(score) + 5);
-    getScore();
-    // i++;
-    function delay(time) {
-      return new Promise((resolve) => setTimeout(resolve, time));
-    }
-    delay(1000).then(() => console.log("ran after 1 second1 passed"));
+      if (
+        event.srcElement.id != askQuestion.correctAnswer &&
+        element.matches(".ansButton")
+      ) {
+        incorrectAnswer();
+      }
+    });
+  } else {
     displayResults();
   }
-
-  function incorrectAnswer() {
-    answerWrongOrRight.innerHTML = "<p>Ooh, bummer. That's Incorrect.</p>";
-    console.log("incorrect");
-    // i++;
-    function delay(time) {
-      return new Promise((resolve) => setTimeout(resolve, time));
-    }
-    delay(1000).then(() => console.log("ran after 1 second1 passed"));
-    displayResults();
-  }
-
-  questionCard.children[1].children[0].textContent = askQuestion.question;
-
-  questionCard.children[1].innerHTML = `<ul>
-  <li><button id="1" >${askQuestion.answer1}</button></li>
-  <li><button id="2" >${askQuestion.answer2}</button></li>
-  <li><button id="3" >${askQuestion.answer3}</button></li>
-  <li><button id="4" >${askQuestion.answer4}</button></li>
-  </ul>
-  `;
-
-  questionCard = addEventListener("click", function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    console.log(event.srcElement.id);
-
-    if (event.srcElement.id == askQuestion.correctAnswer) {
-      correctAnswer();
-    }
-
-    if (event.srcElement.id != askQuestion.correctAnswer) {
-      incorrectAnswer();
-    }
-  });
 }
 
 function displayResults() {
   finalScore.setAttribute("class", "card show");
 
-  // questionCard.setAttribute("class", "hide");
+  questionCard.setAttribute("class", "hide");
 
   console.log("Your Score Is:" + score);
 
@@ -252,33 +205,33 @@ function displayResults() {
 function showHighScores() {
   showHighScores.setAttribute("class", "card show");
 
-  // finalScore.setAttribute("class", "hide");
+  finalScore.setAttribute("class", "hide");
   finalScore.children[1].innerHTML = `<h2> Your Score is ${score}.</h2>`;
 }
 
 // TIMER SECTION
 
 function setTimer() {
-  if (secondsLeft > 0) {
-    var timerInterval = setInterval(function () {
+  var timerInterval = setInterval(function () {
+    if (secondsLeft > 0) {
       secondsLeft--;
       timerElement.textContent = secondsLeft;
-    }, 1000);
-  } else if (secondsLeft == 0) {
-    clearInterval(timerInterval);
-    stopGame();
-    return;
-  }
-  return;
+    } else {
+      clearInterval(timerInterval);
+      stopGame();
+    }
+  }, 1000);
   console.log(secondsLeft + " Seconds Left!");
 }
 
 function init() {
-  startButton = addEventListener("click", function (event) {
-    localStorage.setItem("userScore", 0);
-    event.preventDefault();
-    event.stopPropagation();
-    startGame();
+  startButton.addEventListener("click", function (event) {
+    // var element = event.target; // --- PROBLEM HERE??
+    if (event.target.matches(".startBtn")) {
+      // -- PROBLEM HERE??
+      localStorage.setItem("userScore", 0);
+      startGame();
+    }
   });
 }
 
