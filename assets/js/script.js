@@ -125,9 +125,10 @@ function renderQuestions() {
     function delay(time) {
       return new Promise((resolve) => setTimeout(resolve, time));
     }
-
     delay(1000).then(() => renderQuestions());
     questionNumber++;
+    console.log(questionNumber);
+    console.log(questions[questionNumber]);
   }
 
   function incorrectAnswer() {
@@ -138,10 +139,11 @@ function renderQuestions() {
     }
     delay(1000).then(() => renderQuestions());
     questionNumber++;
+    console.log(questionNumber);
   }
 
   if (questionNumber < 5) {
-    questionCard.children[0].children[0].innerHTML = askQuestion.question;
+    questionCard.children[0].children[0].textContent = askQuestion.question;
 
     questionCard.children[1].innerHTML = `<ul>
   <li><button id="1" class="ansButton">${askQuestion.answer1}</button></li>
