@@ -125,7 +125,7 @@ function renderQuestions() {
     function delay(time) {
       return new Promise((resolve) => setTimeout(resolve, time));
     }
-    delay(1000).then(() => renderQuestions());
+    delay(1000).then(() => displayResults());
     questionNumber++;
     console.log(questionNumber);
     console.log(questions[questionNumber]);
@@ -143,13 +143,14 @@ function renderQuestions() {
   }
 
   if (questionNumber < 5) {
-    questionCard.children[0].children[0].textContent = askQuestion.question;
+    questionCard.children[0].children[0].innerHTML =
+      "<h2>" + askQuestion.question + "</h2>";
 
     questionCard.children[1].innerHTML = `<ul>
-  <li><button id="1" class="ansButton">${askQuestion.answer1}</button></li>
-  <li><button id="2" class="ansButton">${askQuestion.answer2}</button></li>
-  <li><button id="3" class="ansButton">${askQuestion.answer3}</button></li>
-  <li><button id="4" class="ansButton">${askQuestion.answer4}</button></li>
+  <li><button id="1" class="ansButton btn">${askQuestion.answer1}</button></li>
+  <li><button id="2" class="ansButton btn">${askQuestion.answer2}</button></li>
+  <li><button id="3" class="ansButton btn">${askQuestion.answer3}</button></li>
+  <li><button id="4" class="ansButton btn">${askQuestion.answer4}</button></li>
   </ul>
   `;
 
@@ -177,14 +178,14 @@ function renderQuestions() {
 function displayResults() {
   finalScore.setAttribute("class", "card show");
 
-  questionCard.setAttribute("class", "hide");
+  questionCard.setAttribute("class", "dishide");
 
   console.log("Your Score Is:" + score);
 
-  finalScore.children[1].innerHTML = `<ul>
-  <li>${highScore.name} + " ..... " ${highScore.score}</li>
-  </ul>
-  `;
+  // finalScore.children[1].innerHTML = `<ul>
+  // <li>${highScore.name} + " ..... " ${highScore.score}</li>
+  // </ul>
+  // `;
 
   var highScore = {
     name: `${finalScore.event.returnValue}`,
@@ -208,7 +209,19 @@ function showHighScores() {
   showHighScores.setAttribute("class", "card show");
 
   finalScore.setAttribute("class", "hide");
-  finalScore.children[1].innerHTML = `<h2> Your Score is ${score}.</h2>`;
+  finalScore.children[0].innerHTML = `<h2> High Scores </h2>`;
+
+  showHighScores.children[1].innerHTML = `<ul>
+  <li>${highScore.name} + " ..... " ${highScore.score}</li>`.forEach(function (
+    item
+  ) {
+    var hScoreName = document.createElement("h3");
+    var hScore = document.createElement("h2");
+    hScoreName.textContent = highScore.name;
+    hScore.textContent = highScore.score;
+    finalScore.append(hScoreName);
+    finalScore.append(hScore);
+  });
 }
 
 // TIMER SECTION
