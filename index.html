@@ -23,19 +23,15 @@
         <div class="card-body">
           <p>Try to answer as many questions correctly as you can!</p>
         </div>
-        <div class="card-footer">
-          <!-- <button id="startButton" class="btn">Start</button> -->
+        <div class="card-footer" id="start">
+          <button id="startButton" class="show startBtn">Start</button>
         </div>
       </div>
 
       <div class="card hide" id="questions">
-        <div class="card-header">
-          <h2>
-            <!-- Question Name Dynamically Inserted Here  -->
-          </h2>
-        </div>
-        <div class="card-body" id="answers"></div>
-        <div class="card-footer" id="answerWrongOrRight">
+        <div class="qCard-header"></div>
+        <div class="qCard-body" id="answers"></div>
+        <div class="qCard-footer" id="answerWrongOrRight">
           <!-- Wrong or Right Message Displayed Here Dynamically  -->
         </div>
       </div>
@@ -44,11 +40,15 @@
         <div class="card-header">
           <h2>All Done!</h2>
         </div>
-        <div class="card-body"></div>
-        <div class="card-footer">
-          <input type="text" placeholder="save high score" /><input
-            type="submit"
-          />
+        <div class="fsCard-body"></div>
+        <div class="fsCard-footer">
+          <form>
+            <input
+              type="text"
+              placeholder="save high score"
+              id="formInput"
+            /><input type="submit" />
+          </form>
         </div>
       </div>
 
@@ -65,9 +65,7 @@
         </div>
       </div>
 
-      <div id="start">
-        <button id="startButton" class="show startBtn">Start</button>
-      </div>
+      <div id="start"></div>
     </div>
     <script async src="assets/js/script.js"></script>
   </body>

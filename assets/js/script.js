@@ -9,10 +9,16 @@ var answerWrongOrRight = document.querySelector("#answerWrongOrRight");
 var start = document.querySelector("#start");
 var finalScore = document.querySelector("#finalScore");
 var showHighScores = document.querySelector("#showHighScores");
+var cardHeader = document.querySelector(".qCard-header");
+var cardBody = document.querySelector(".qCard-body");
+var cardFooter = document.querySelector(".qCard-footer");
+var fsCardBody = document.querySelector(".fsCard-body");
+var formInput = document.querySelector("#formInput");
 
 var storedScore = localStorage.getItem("userScore");
 var score = 0;
-let secondsLeft = 120;
+let secondsLeft = 60;
+var questionNumber = 0;
 
 var question = document.getElementById("#question");
 var answer1 = document.getElementById(".btn1");
@@ -39,30 +45,30 @@ var question2 = {
 };
 
 var question3 = {
-  question: "What Color Is The Sky?",
+  question: "Question 3?",
   answer1: "Blue",
   answer2: "Red",
   answer3: "Green",
   answer4: "Yellow",
-  correctAnswer: "",
+  correctAnswer: "1",
 };
 
 var question4 = {
-  question: "What Color Is The Sky?",
+  question: "Question 4?",
   answer1: "Blue",
   answer2: "Red",
   answer3: "Green",
   answer4: "Yellow",
-  correctAnswer: "",
+  correctAnswer: "2",
 };
 
 var question5 = {
-  question: "What Color Is The Sky?",
+  question: "Question 5?",
   answer1: "Blue",
   answer2: "Red",
   answer3: "Green",
   answer4: "Yellow",
-  correctAnswer: "",
+  correctAnswer: "3",
 };
 
 localStorage.setItem("questionOne", JSON.stringify(question1));
@@ -79,9 +85,12 @@ var questions = [
   "questionFive",
 ];
 
-console.log(question1);
+var highScore = {
+  name: name,
+  score: score,
+};
 
-console.log(questions[1]);
+console.log(question1);
 
 function getScore() {
   if (storedScore === null) {
@@ -102,8 +111,9 @@ function startGame() {
   renderQuestions();
 }
 
-function stopGame() {}
-
+function stopGame() {
+  displayResults();
+}
 //    ** QUESTION DISPLAY **
 
 function showQuestions() {
@@ -113,40 +123,17 @@ function showQuestions() {
 }
 
 function renderQuestions() {
-  var questionNumber = 0;
   var askQuestion = JSON.parse(localStorage.getItem(questions[questionNumber]));
 
-  function correctAnswer() {
-    // storedScore = storedScore + 20;
-    answerWrongOrRight.innerHTML = "<p>You Got It! Correct!</p>";
-    console.log("correct answer!");
-    localStorage.setItem("userScore", parseInt(score) + 5);
-    getScore();
-    function delay(time) {
-      return new Promise((resolve) => setTimeout(resolve, time));
-    }
-    delay(1000).then(() => displayResults());
-    questionNumber++;
-    console.log(questionNumber);
-    console.log(questions[questionNumber]);
-  }
+  cardHeader.innerHTML = "";
+  cardBody.innerHTML = "";
+  answerWrongOrRight.innerHTML = "";
 
-  function incorrectAnswer() {
-    answerWrongOrRight.innerHTML = "<p>Ooh, bummer. That's Incorrect.</p>";
-    console.log("incorrect");
-    function delay(time) {
-      return new Promise((resolve) => setTimeout(resolve, time));
-    }
-    delay(1000).then(() => renderQuestions());
-    questionNumber++;
-    console.log(questionNumber);
-  }
+  console.log(`on question number: ${questionNumber}`);
 
-  if (questionNumber < 5) {
-    questionCard.children[0].children[0].innerHTML =
-      "<h2>" + askQuestion.question + "</h2>";
-
-    questionCard.children[1].innerHTML = `<ul>
+  if (questionNumber < 4) {
+    cardHeader.innerHTML = "<h2>" + askQuestion.question + "</h2>";
+    cardBody.innerHTML = `<ul>
   <li><button id="1" class="ansButton btn">${askQuestion.answer1}</button></li>
   <li><button id="2" class="ansButton btn">${askQuestion.answer2}</button></li>
   <li><button id="3" class="ansButton btn">${askQuestion.answer3}</button></li>
@@ -155,19 +142,18 @@ function renderQuestions() {
   `;
 
     questionCard = addEventListener("click", function (event) {
-      console.log(event.srcElement.id);
+      console.log(event.target.id);
 
       var element = event.target;
 
-      if (event.srcElement.id == askQuestion.correctAnswer) {
-        correctAnswer();
-      }
+      if (element.matches(".ansButton")) {
+        if (event.target.id == askQuestion.correctAnswer) {
+          correctAnswer();
+        }
 
-      if (
-        event.srcElement.id != askQuestion.correctAnswer &&
-        element.matches(".ansButton")
-      ) {
-        incorrectAnswer();
+        if (event.target.id !== askQuestion.correctAnswer) {
+          incorrectAnswer();
+        }
       }
     });
   } else {
@@ -175,52 +161,89 @@ function renderQuestions() {
   }
 }
 
+function correctAnswer() {
+  // storedScore = storedScore + 20;
+  questionNumber++;
+  score++;
+  answerWrongOrRight.innerHTML = "<p>You Got It! Correct!</p>";
+  console.log("correct answer!");
+  localStorage.setItem("userScore", parseInt(score));
+  getScore();
+  // function delay(time) {
+  //   return new Promise((resolve) => setTimeout(resolve, time));
+  // }
+  // delay(1000).then(() =>
+  renderQuestions();
+  // );
+  console.log(
+    `on question number: ${questionNumber} at correct answer function`
+  );
+  console.log("Your Score Is:" + score + " at Correct Answer function");
+}
+
+function incorrectAnswer() {
+  questionNumber++;
+  answerWrongOrRight.innerHTML = "<p>Ooh, bummer. That's Incorrect.</p>";
+  console.log("incorrect");
+  // function delay(time) {
+  //   return new Promise((resolve) => setTimeout(resolve, time));
+  // }
+  // delay(1000).then(() =>
+  renderQuestions();
+  // );
+
+  console.log(
+    `on question number: ${questionNumber} at incorrect answer function`
+  );
+  console.log("Your Score Is:" + score + " at Incorrect Answer function");
+}
+
 function displayResults() {
   finalScore.setAttribute("class", "card show");
 
-  questionCard.setAttribute("class", "dishide");
+  // questionCard.setAttribute("class", "hide");
 
+  fsCardBody.innerHTML = `Your Score Is: ${score}`;
   console.log("Your Score Is:" + score);
-
-  // finalScore.children[1].innerHTML = `<ul>
-  // <li>${highScore.name} + " ..... " ${highScore.score}</li>
-  // </ul>
-  // `;
-
-  var highScore = {
-    name: `${finalScore.event.returnValue}`,
-    score: score,
-  };
-
-  localStorage.setItem("highScore", JSON.stringify(highScore));
-
-  finalScore = addEventListener("click", function (event) {
-    // EVENT LISTENER OR??
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-    console.log(event.returnValue);
-    localStorage.setItem("highScore", JSON.stringify(highScore));
-    showHighScores();
-  });
+  recordScore();
 }
 
-function showHighScores() {
+function showScores() {
+  console.log("SHOW HIGH SCORES?");
   showHighScores.setAttribute("class", "card show");
-
   finalScore.setAttribute("class", "hide");
   finalScore.children[0].innerHTML = `<h2> High Scores </h2>`;
 
-  showHighScores.children[1].innerHTML = `<ul>
-  <li>${highScore.name} + " ..... " ${highScore.score}</li>`.forEach(function (
-    item
-  ) {
-    var hScoreName = document.createElement("h3");
-    var hScore = document.createElement("h2");
-    hScoreName.textContent = highScore.name;
-    hScore.textContent = highScore.score;
-    finalScore.append(hScoreName);
-    finalScore.append(hScore);
+  var dispScore = JSON.parse(localStorage.getItem(highScore));
+
+  console.log(dispScore);
+
+  // showHighScores.children[1].innerHTML = `<ul>
+  // <li>${dispScore.name} + " ..... " ${dispScore.score}</li>
+  // </ul>
+  //   `;
+
+  // forEach(function (item) {
+  // var hScoreName = finalScore.children[1].createElement("h3");
+  // var hScore = finalScore.children[1].createElement("h2");
+  // hScoreName.textContent = dispScore.name;
+  // hScore.textContent = dispScore.score;
+  // finalScore.append(hScoreName);
+  // finalScore.append(hScore);
+  // });
+
+  goBack.addEventListener("click", function (event) {
+    if (event.target.matches("#goBack")) {
+      startGame();
+      console.log("GO BACK");
+    }
+  });
+
+  clearHighScores.addEventListener("click", function (event) {
+    if (event.target.matches("#clearHighScores")) {
+      init();
+      console.log("CLEAR HIGH SCORES");
+    }
   });
 }
 
@@ -241,12 +264,26 @@ function setTimer() {
 
 function init() {
   startButton.addEventListener("click", function (event) {
-    // var element = event.target; // --- PROBLEM HERE??
     if (event.target.matches(".startBtn")) {
-      // -- PROBLEM HERE??
       localStorage.setItem("userScore", 0);
       startGame();
     }
+  });
+}
+
+function recordScore() {
+  finalScore.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var highScore = {
+      name: `${formInput.value}`,
+      score: score,
+    };
+
+    localStorage.setItem("highScore", JSON.stringify(highScore));
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    console.log(formInput.value);
+    showScores();
   });
 }
 
