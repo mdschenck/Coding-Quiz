@@ -47,7 +47,7 @@
               type="text"
               placeholder="save high score"
               id="formInput"
-            /><input type="submit" />
+            /><br /><input type="submit" id="submitBtn" />
           </form>
         </div>
       </div>
@@ -57,15 +57,15 @@
           <h2>High Scores</h2>
         </div>
         <div class="card-body">
-          <!-- FOR EACH? - Append High Scores in UL from Local Storage -->
+          <ul id="highScoreList">
+            <!-- Append High Scores in UL from Local Storage -->
+          </ul>
         </div>
         <div class="card-footer">
           <button id="goBack" class="btn">Go Back</button>
           <button id="clearHighScores" class="btn">Clear High Scores</button>
         </div>
       </div>
-
-      <div id="start"></div>
     </div>
     <script async src="assets/js/script.js"></script>
   </body>

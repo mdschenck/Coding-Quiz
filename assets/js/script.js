@@ -14,6 +14,7 @@ var cardBody = document.querySelector(".qCard-body");
 var cardFooter = document.querySelector(".qCard-footer");
 var fsCardBody = document.querySelector(".fsCard-body");
 var formInput = document.querySelector("#formInput");
+var highScoreList = document.querySelector("#highScoreList");
 
 var storedScore = localStorage.getItem("userScore");
 var score = 0;
@@ -85,10 +86,14 @@ var questions = [
   "questionFive",
 ];
 
-var highScore = {
-  name: name,
-  score: score,
-};
+// var highScore = {
+//   name: "name",
+//   score: "score",
+// };
+
+var highScoreArray = [];
+
+var highScoreNumber = 0;
 
 console.log(question1);
 
@@ -112,7 +117,7 @@ function startGame() {
 }
 
 function stopGame() {
-  displayResults();
+  // displayResults();
 }
 //    ** QUESTION DISPLAY **
 
@@ -131,7 +136,7 @@ function renderQuestions() {
 
   console.log(`on question number: ${questionNumber}`);
 
-  if (questionNumber < 4) {
+  if (questionNumber < 5) {
     cardHeader.innerHTML = "<h2>" + askQuestion.question + "</h2>";
     cardBody.innerHTML = `<ul>
   <li><button id="1" class="ansButton btn">${askQuestion.answer1}</button></li>
@@ -143,7 +148,8 @@ function renderQuestions() {
 
     questionCard = addEventListener("click", function (event) {
       console.log(event.target.id);
-
+      event.stopPropagation();
+      event.stopImmediatePropagation();
       var element = event.target;
 
       if (element.matches(".ansButton")) {
@@ -162,19 +168,16 @@ function renderQuestions() {
 }
 
 function correctAnswer() {
-  // storedScore = storedScore + 20;
   questionNumber++;
   score++;
   answerWrongOrRight.innerHTML = "<p>You Got It! Correct!</p>";
   console.log("correct answer!");
   localStorage.setItem("userScore", parseInt(score));
   getScore();
-  // function delay(time) {
-  //   return new Promise((resolve) => setTimeout(resolve, time));
-  // }
-  // delay(1000).then(() =>
-  renderQuestions();
-  // );
+  function delay(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+  delay(1000).then(() => renderQuestions());
   console.log(
     `on question number: ${questionNumber} at correct answer function`
   );
@@ -185,12 +188,10 @@ function incorrectAnswer() {
   questionNumber++;
   answerWrongOrRight.innerHTML = "<p>Ooh, bummer. That's Incorrect.</p>";
   console.log("incorrect");
-  // function delay(time) {
-  //   return new Promise((resolve) => setTimeout(resolve, time));
-  // }
-  // delay(1000).then(() =>
-  renderQuestions();
-  // );
+  function delay(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+  delay(1000).then(() => renderQuestions());
 
   console.log(
     `on question number: ${questionNumber} at incorrect answer function`
@@ -201,9 +202,8 @@ function incorrectAnswer() {
 function displayResults() {
   finalScore.setAttribute("class", "card show");
 
-  // questionCard.setAttribute("class", "hide");
-
-  fsCardBody.innerHTML = `Your Score Is: ${score}`;
+  // questionCard.setAttribute("class", "hide");  // *******CANNOT READ PROPERTIES OF UNDEFINED??? ******
+  fsCardBody.innerHTML = `<h2> Your Score Is: ${score} </h2>`;
   console.log("Your Score Is:" + score);
   recordScore();
 }
@@ -214,25 +214,26 @@ function showScores() {
   finalScore.setAttribute("class", "hide");
   finalScore.children[0].innerHTML = `<h2> High Scores </h2>`;
 
-  var dispScore = JSON.parse(localStorage.getItem(highScore));
+  highScore = {
+    name: `${formInput.value}`,
+    score: score,
+  };
 
-  console.log(dispScore);
+  highScoreArray = JSON.parse(localStorage.getItem("highScoreArray")) || [];
+  highScoreArray.push(highScore);
+  alert(highScoreArray);
+  localStorage.setItem("highScoreArray", JSON.stringify(highScoreArray));
+  console.log(highScoreArray);
 
-  // showHighScores.children[1].innerHTML = `<ul>
-  // <li>${dispScore.name} + " ..... " ${dispScore.score}</li>
-  // </ul>
-  //   `;
-
-  // forEach(function (item) {
-  // var hScoreName = finalScore.children[1].createElement("h3");
-  // var hScore = finalScore.children[1].createElement("h2");
-  // hScoreName.textContent = dispScore.name;
-  // hScore.textContent = dispScore.score;
-  // finalScore.append(hScoreName);
-  // finalScore.append(hScore);
-  // });
+  for (var i = 0; i < 5; i++) {
+    var hScore = highScoreList.createElement("li"); //******** CREATE ELEMENT IS NOT A FUNCTION??? */
+    hScore.innerHTML = `<h2>${highScoreArray[i].name} .................. ${highScoreArray[i].score}</h2>`;
+    highScoreList.append(hScore);
+  }
 
   goBack.addEventListener("click", function (event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
     if (event.target.matches("#goBack")) {
       startGame();
       console.log("GO BACK");
@@ -240,9 +241,13 @@ function showScores() {
   });
 
   clearHighScores.addEventListener("click", function (event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
     if (event.target.matches("#clearHighScores")) {
+      localStorage.clear();
       init();
       console.log("CLEAR HIGH SCORES");
+      showHighScores.children[1].innerHTML = "";
     }
   });
 }
@@ -259,7 +264,6 @@ function setTimer() {
       stopGame();
     }
   }, 1000);
-  console.log(secondsLeft + " Seconds Left!");
 }
 
 function init() {
@@ -274,12 +278,8 @@ function init() {
 function recordScore() {
   finalScore.addEventListener("submit", function (event) {
     event.preventDefault();
-    var highScore = {
-      name: `${formInput.value}`,
-      score: score,
-    };
+    highScoreNumber++;
 
-    localStorage.setItem("highScore", JSON.stringify(highScore));
     event.stopPropagation();
     event.stopImmediatePropagation();
     console.log(formInput.value);
