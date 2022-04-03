@@ -151,16 +151,17 @@ function renderQuestions() {
 
     questionCard = addEventListener("click", function (event) {
       console.log(event.target.id);
-      event.stopPropagation();
-      event.stopImmediatePropagation();
+
       var element = event.target;
+      // event.stopPropagation();      // ************ EVENT CAUSING TRIGGERING MULTIPLE TIMES? IF Stop proproation answers do not register?? **********
+      // event.stopImmediatePropagation();
 
       if (element.matches(".ansButton")) {
-        if (event.target.id == askQuestion.correctAnswer) {
+        if (element.id == askQuestion.correctAnswer) {
           correctAnswer();
         }
 
-        if (event.target.id !== askQuestion.correctAnswer) {
+        if (element.id !== askQuestion.correctAnswer) {
           incorrectAnswer();
         }
       }
