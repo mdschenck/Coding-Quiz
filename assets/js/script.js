@@ -2,6 +2,7 @@ var timerElement = document.querySelector("#timerElement");
 var startButton = document.querySelector("#startButton");
 var goBackButton = document.querySelector("#goBack");
 var clearHighScores = document.querySelector("#clearHighScores");
+var viewHighScores = document.querySelector("#viewHighScores");
 var welcomeCard = document.querySelector("#welcomeCard");
 var questionCard = document.querySelector("#questions");
 var answers = document.querySelector("#answers");
@@ -20,6 +21,7 @@ var storedScore = localStorage.getItem("userScore");
 var score = 0;
 let secondsLeft = 60;
 var questionNumber = 0;
+var timerRun = true;
 
 var question = document.getElementById("#question");
 var answer1 = document.getElementById(".btn1");
@@ -28,48 +30,49 @@ var answer3 = document.getElementById(".btn3");
 var answer4 = document.getElementById(".btn4");
 
 var question1 = {
-  question: "What Color Is The Sky?",
-  answer1: "Blue",
-  answer2: "Red",
-  answer3: "Green",
-  answer4: "Yellow",
-  correctAnswer: "1",
+  question:
+    "What provides the basic content and structure of a web application?",
+  answer1: "Javascript",
+  answer2: "CSS",
+  answer3: "HTML",
+  answer4: "React",
+  correctAnswer: "3",
 };
 
 var question2 = {
-  question: "What Color Is A Banana?",
-  answer1: "Blue",
-  answer2: "Red",
-  answer3: "Green",
-  answer4: "Yellow",
-  correctAnswer: "4",
-};
-
-var question3 = {
-  question: "Question 3?",
-  answer1: "Blue",
-  answer2: "Red",
-  answer3: "Green",
-  answer4: "Yellow",
-  correctAnswer: "1",
-};
-
-var question4 = {
-  question: "Question 4?",
-  answer1: "Blue",
-  answer2: "Red",
-  answer3: "Green",
-  answer4: "Yellow",
+  question: "Javascript is a(n) __________ Based Programming Language",
+  answer1: "Function",
+  answer2: "Object",
+  answer3: "Query",
+  answer4: "Argumentative",
   correctAnswer: "2",
 };
 
+var question3 = {
+  question: "CSS Stands for ___________ Style Sheets?",
+  answer1: "Concentric",
+  answer2: "Current",
+  answer3: "Consecutive",
+  answer4: "Cascading",
+  correctAnswer: "4",
+};
+
+var question4 = {
+  question: "What is a Boolean Value?",
+  answer1: "True or False",
+  answer2: "A number",
+  answer3: "Text",
+  answer4: "Falsy",
+  correctAnswer: "1",
+};
+
 var question5 = {
-  question: "Question 5?",
-  answer1: "Blue",
-  answer2: "Red",
-  answer3: "Green",
-  answer4: "Yellow",
-  correctAnswer: "3",
+  question: "What Programming Language Is The Most Fun?",
+  answer1: "C#",
+  answer2: "RoR",
+  answer3: "Css",
+  answer4: "Javascript!",
+  correctAnswer: "4",
 };
 
 localStorage.setItem("questionOne", JSON.stringify(question1));
@@ -205,6 +208,7 @@ function displayResults() {
   // questionCard.setAttribute("class", "hide");  // *******CANNOT READ PROPERTIES OF UNDEFINED??? ******
   fsCardBody.innerHTML = `<h2> Your Score Is: ${score} </h2>`;
   console.log("Your Score Is:" + score);
+  timerRun = false;
   recordScore();
 }
 
@@ -225,18 +229,27 @@ function showScores() {
   localStorage.setItem("highScoreArray", JSON.stringify(highScoreArray));
   console.log(highScoreArray);
 
-  for (var i = 0; i < 5; i++) {
-    var hScore = highScoreList.createElement("li"); //******** CREATE ELEMENT IS NOT A FUNCTION??? */
-    hScore.innerHTML = `<h2>${highScoreArray[i].name} .................. ${highScoreArray[i].score}</h2>`;
-    highScoreList.append(hScore);
-  }
+  // for (var i = 0; i < 5; i++) {
+  //   var hScore = highScoreList.createElement("li"); //******** CREATE ELEMENT IS NOT A FUNCTION??? */
+  //   hScore.innerHTML = `<h2>${highScoreArray[i].name} .................. ${highScoreArray[i].score}</h2>`;
+  //   highScoreList.append(hScore);
+  // }
+
+  viewHighScores.addEventListener("click", function (event) {
+    if (event.target.matches("#viewHighScores")) {
+      showScores();
+      console.log("SHOW SCORES");
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+    }
+  });
 
   goBack.addEventListener("click", function (event) {
-    event.stopPropagation();
-    event.stopImmediatePropagation();
     if (event.target.matches("#goBack")) {
       startGame();
       console.log("GO BACK");
+      event.stopPropagation();
+      event.stopImmediatePropagation();
     }
   });
 
@@ -252,11 +265,11 @@ function showScores() {
   });
 }
 
-// TIMER SECTION
+// TIMER SECTION -- HOW CAN KILL from outside function?
 
 function setTimer() {
   var timerInterval = setInterval(function () {
-    if (secondsLeft > 0) {
+    if (secondsLeft > 0 && timerRun) {
       secondsLeft--;
       timerElement.textContent = secondsLeft;
     } else {

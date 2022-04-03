@@ -1,6 +1,11 @@
 html {
   height: 100%;
+  max-width: 850px;
+  align-content: center;
+  vertical-align: middle;
+  margin: auto;
 }
+
 body {
   background: linear-gradient(#757575, #050505);
   min-height: 100%;
@@ -34,15 +39,15 @@ header h2 {
 }
 
 .card {
-  margin-left: 33%;
-  width: 450px;
+  margin-left: 25%;
+  width: 50%;
   background-color: rgb(9, 177, 121);
 
   border-color: brown;
   border-style: solid;
   border-radius: 15px;
-  min-height: 250px;
-  max-height: 250px;
+  min-height: 300px;
+  max-height: 400px;
 }
 
 .card p {
@@ -51,14 +56,16 @@ header h2 {
 }
 
 .card h2 {
-  text-align: center;
+text-align: center;
 }
 .card button {
-  margin-left: 22%;
+  width: 60%
+  margin-left: 10%;
 }
 
 .card input {
-  margin-left: 22%;
+  width: 60%
+  margin-left: 20%;
 }
 
 ul {
@@ -77,9 +84,8 @@ ul {
   margin: 2px 2px 2px 2px;
   padding: 7px;
   cursor: pointer;
-  float: inline-end;
-  width: 200px;
-  margin-left: 22%;
+  width: 60%;
+  margin-left: 20%;
 }
 
 .btn {
@@ -94,8 +100,9 @@ ul {
   padding: 7px;
   text-align: center;
   cursor: pointer;
-  float: inline-end;
-  width: 200px;
+  width: 60%;
+  margin-left:15%;
+
 }
 
 button[disabled] {
@@ -104,7 +111,8 @@ button[disabled] {
 }
 
 #formInput {
-  width: 200px;
+  width: 55%;
+  margin-left: 22.5%;
   line-height: 20px;
 }
 
@@ -119,10 +127,9 @@ button[disabled] {
   margin: 2px 2px 2px 2px;
   padding: 7px;
   text-align: center;
-  cursor: pointer;
-  float: inline-end;
-  width: 200px;
-  margin-left: 22%;
+  cursor: pointer;;
+  width: 60%;
+  margin-left:20%;
 }
 
 #goBack {
@@ -137,9 +144,8 @@ button[disabled] {
   padding: 7px;
   text-align: center;
   cursor: pointer;
-  float: inline-end;
-  width: 200px;
-  margin-left: 22%;
+  width: 60%;
+  margin-left: 20%;
 }
 
 #clearHighScores {
@@ -154,7 +160,22 @@ button[disabled] {
   padding: 7px;
   text-align: center;
   cursor: pointer;
-  float: inline-end;
-  width: 200px;
-  margin-left: 22%;
+  width: 60%;
+  margin-left: 20%;
+}
+
+#viewHighScores {
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 5px;
+  border: none;
+  background-color: hsl(206, 90%, 32%);
+  border-radius: 10px;
+  color: hsl(0, 0%, 100%);
+  font-size: 20px;
+  line-height: 20px;
+  padding: 7px;
+  text-align: center;
+  cursor: pointer;
+
 }
