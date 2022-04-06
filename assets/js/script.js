@@ -153,16 +153,18 @@ function renderQuestions() {
       console.log(event.target.id);
 
       var element = event.target;
-      // event.stopPropagation();      // ************ EVENT CAUSING TRIGGERING MULTIPLE TIMES? IF Stop proproation answers do not register?? **********
+      // ************ EVENT CAUSING TRIGGERING MULTIPLE TIMES? IF Stop proproation answers do not register?? **********
       // event.stopImmediatePropagation();
 
       if (element.matches(".ansButton")) {
         if (element.id == askQuestion.correctAnswer) {
           correctAnswer();
+          console.log("correct answer-" + askQuestion.correctAnswer);
         }
 
-        if (element.id !== askQuestion.correctAnswer) {
+        if (element.id != askQuestion.correctAnswer) {
           incorrectAnswer();
+          console.log("incorrect answer-" + askQuestion.correctAnswer);
         }
       }
     });
@@ -176,8 +178,6 @@ function correctAnswer() {
   score++;
   answerWrongOrRight.innerHTML = "<p>You Got It! Correct!</p>";
   console.log("correct answer!");
-  localStorage.setItem("userScore", parseInt(score));
-  getScore();
   function delay(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
   }
@@ -227,13 +227,12 @@ function showScores() {
 
   highScoreArray = JSON.parse(localStorage.getItem("highScoreArray")) || [];
   highScoreArray.push(highScore);
-  alert(highScoreArray);
   localStorage.setItem("highScoreArray", JSON.stringify(highScoreArray));
   console.log(highScoreArray);
 
   for (var i = 0; i < highScoreArray.length; i++) {
     highScoreArray = JSON.parse(localStorage.getItem("highScoreArray")) || [];
-    var hScore = document.createElement("li"); //******** CREATE ELEMENT IS NOT A FUNCTION??? */
+    var hScore = document.createElement("li");
     console.log(highScoreArray.name);
     console.log(highScoreArray.score);
     highScoreArray.score;
@@ -272,8 +271,6 @@ function showScores() {
   });
 }
 
-// TIMER SECTION -- HOW CAN KILL from outside function?
-
 function setTimer() {
   var timerInterval = setInterval(function () {
     if (secondsLeft > 0 && timerRun) {
@@ -289,7 +286,6 @@ function setTimer() {
 function init() {
   startButton.addEventListener("click", function (event) {
     if (event.target.matches(".startBtn")) {
-      localStorage.setItem("userScore", 0);
       startGame();
     }
   });
