@@ -219,6 +219,9 @@ function showScores() {
   console.log("SHOW HIGH SCORES?");
   showHighScores.setAttribute("class", "card show");
   finalScore.setAttribute("class", "hide");
+  questionCard.classList.remove("show");
+  questionCard.classList.add("hide");
+  welcomeCard.setAttribute("class", "hide");
   finalScore.children[0].innerHTML = `<h2> High Scores </h2>`;
 
   highScore = {
@@ -241,15 +244,6 @@ function showScores() {
     highScoreList.append(hScore);
   }
 
-  viewHighScores.addEventListener("click", function (event) {
-    if (event.target.matches("#viewHighScores")) {
-      showScores();
-      console.log("SHOW SCORES");
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-    }
-  });
-
   goBack.addEventListener("click", function (event) {
     if (event.target.matches("#goBack")) {
       location.reload();
@@ -257,6 +251,46 @@ function showScores() {
       // console.log("GO BACK");
       // event.stopPropagation();
       // event.stopImmediatePropagation();
+    }
+  });
+
+  clearHighScores.addEventListener("click", function (event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    if (event.target.matches("#clearHighScores")) {
+      localStorage.clear();
+      init();
+      console.log("CLEAR HIGH SCORES");
+      showHighScores.children[1].innerHTML = "";
+    }
+  });
+}
+
+function viewHighScoreBoard() {
+  console.log("SHOW HIGH SCORES?");
+  showHighScores.setAttribute("class", "card show");
+  finalScore.setAttribute("class", "hide");
+  questionCard.classList.remove("show");
+  questionCard.classList.add("hide");
+  welcomeCard.setAttribute("class", "hide");
+  finalScore.children[0].innerHTML = `<h2> High Scores </h2>`;
+
+  highScoreArray = JSON.parse(localStorage.getItem("highScoreArray")) || [];
+  console.log(highScoreArray);
+
+  for (var i = 0; i < highScoreArray.length; i++) {
+    highScoreArray = JSON.parse(localStorage.getItem("highScoreArray")) || [];
+    var hScore = document.createElement("li");
+    console.log(highScoreArray.name);
+    console.log(highScoreArray.score);
+    highScoreArray.score;
+    hScore.innerHTML = `<h2>${highScoreArray[i].name} .................. ${highScoreArray[i].score}</h2>`;
+    highScoreList.append(hScore);
+  }
+
+  goBack.addEventListener("click", function (event) {
+    if (event.target.matches("#goBack")) {
+      location.reload();
     }
   });
 
@@ -303,5 +337,14 @@ function recordScore() {
     showScores();
   });
 }
+
+viewHighScores.addEventListener("click", function (event) {
+  if (event.target.matches("#viewHighScores")) {
+    viewHighScoreBoard();
+    console.log("SHOW SCORES");
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+  }
+});
 
 init();
