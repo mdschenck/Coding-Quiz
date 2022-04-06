@@ -37,12 +37,16 @@ https://mdschenck.github.io/Coding-Quiz/
 
 When the user navigates to the deployed page, they are presented with a start screen for the Coding Quiz.
 
-![Screenshot showing deployed website input](assets/images/CodingQuiz_Screenshot1.JPG)
+![Screenshot showing deployed website start screen](assets/images/CodingQuiz_Screenshot1.JPG)
 
 When the user clicks the start button, the countdown timer starts running and they are presented with the first question.
 
-![Screenshot showing deployed website input](assets/images/CodingQuiz_Screenshot2.JPG)
+![Screenshot showing deployed website quiz question](assets/images/CodingQuiz_Screenshot2.JPG)
 
 As the user answers questions, they are presented with a message showing whether the answer was correct or incorrect. When they have answered all of the questions, the user's score will be displayed, along with a text input field to enter their name to score with their high score in local storage.
 
+![Screenshot showing deployed website display score](assets/images/CodingQuiz_Screenshot3.JPG)
+
 The high score is persistent in local storage and will continue to display until the local storage is cleared by hitting the clear high scores button.
+
+![Screenshot showing deployed website display score](assets/images/CodingQuiz_Screenshot4.JPG)

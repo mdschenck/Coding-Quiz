@@ -167,6 +167,7 @@ function renderQuestions() {
           console.log("incorrect answer-" + askQuestion.correctAnswer);
         }
       }
+      event.stopPropagation();
     });
   } else {
     displayResults();
