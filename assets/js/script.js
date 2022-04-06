@@ -4,7 +4,7 @@ var goBackButton = document.querySelector("#goBack");
 var clearHighScores = document.querySelector("#clearHighScores");
 var viewHighScores = document.querySelector("#viewHighScores");
 var welcomeCard = document.querySelector("#welcomeCard");
-var questionCard = document.querySelector("#questions");
+var questionCard = document.getElementById("questions");
 var answers = document.querySelector("#answers");
 var answerWrongOrRight = document.querySelector("#answerWrongOrRight");
 var start = document.querySelector("#start");
@@ -149,7 +149,7 @@ function renderQuestions() {
   </ul>
   `;
 
-    questionCard = addEventListener("click", function (event) {
+    questionCard.addEventListener("click", function (event) {
       console.log(event.target.id);
 
       var element = event.target;
@@ -205,8 +205,9 @@ function incorrectAnswer() {
 
 function displayResults() {
   finalScore.setAttribute("class", "card show");
-
-  // questionCard.setAttribute("class", "hide");  // *******CANNOT READ PROPERTIES OF UNDEFINED??? ******
+  console.log(questionCard);
+  questionCard.classList.remove("show");
+  questionCard.classList.add("hide");
   fsCardBody.innerHTML = `<h2> Your Score Is: ${score} </h2>`;
   console.log("Your Score Is:" + score);
   timerRun = false;
@@ -230,11 +231,15 @@ function showScores() {
   localStorage.setItem("highScoreArray", JSON.stringify(highScoreArray));
   console.log(highScoreArray);
 
-  // for (var i = 0; i < 5; i++) {
-  //   var hScore = highScoreList.createElement("li"); //******** CREATE ELEMENT IS NOT A FUNCTION??? */
-  //   hScore.innerHTML = `<h2>${highScoreArray[i].name} .................. ${highScoreArray[i].score}</h2>`;
-  //   highScoreList.append(hScore);
-  // }
+  for (var i = 0; i < highScoreArray.length; i++) {
+    highScoreArray = JSON.parse(localStorage.getItem("highScoreArray")) || [];
+    var hScore = document.createElement("li"); //******** CREATE ELEMENT IS NOT A FUNCTION??? */
+    console.log(highScoreArray.name);
+    console.log(highScoreArray.score);
+    highScoreArray.score;
+    hScore.innerHTML = `<h2>${highScoreArray[i].name} .................. ${highScoreArray[i].score}</h2>`;
+    highScoreList.append(hScore);
+  }
 
   viewHighScores.addEventListener("click", function (event) {
     if (event.target.matches("#viewHighScores")) {
@@ -247,10 +252,11 @@ function showScores() {
 
   goBack.addEventListener("click", function (event) {
     if (event.target.matches("#goBack")) {
-      startGame();
-      console.log("GO BACK");
-      event.stopPropagation();
-      event.stopImmediatePropagation();
+      location.reload();
+      // startGame();
+      // console.log("GO BACK");
+      // event.stopPropagation();
+      // event.stopImmediatePropagation();
     }
   });
 

@@ -8,7 +8,7 @@ For this project, I was tasked with creating a Coding Quiz that is created with 
 
 ## Link to deployed application:
 
-https://mdschenck.github.io/Coding_Quiz/
+https://mdschenck.github.io/Coding-Quiz/
 
 ## User Story for this project:
 
